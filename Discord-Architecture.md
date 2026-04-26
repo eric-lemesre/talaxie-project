@@ -6,12 +6,12 @@
 
 ## 1. Vue d'ensemble
 
-| Élément | Description |
-|---------|-------------|
-| **Nom** | Talaxie Community |
-| **Public cible** | Utilisateurs Talend/Open Studio, développeurs Java, data engineers, entreprises |
-| **Philosophie** | Ouvert, bienveillant, technique. Pas de support commercial, mais de l'entraide communautaire. |
-| **Langue principale** | Français + Anglais (canaux bilingues ou séparés) |
+| Élément               | Description                                                                                   |
+|-----------------------|-----------------------------------------------------------------------------------------------|
+| **Nom**               | Talaxie Community                                                                             |
+| **Public cible**      | Utilisateurs Talend/Open Studio, développeurs Java, data engineers, entreprises               |
+| **Philosophie**       | Ouvert, bienveillant, technique. Pas de support commercial, mais de l'entraide communautaire. |
+| **Langue principale** | Français + Anglais (canaux bilingues ou séparés)                                              |
 
 ---
 
@@ -19,77 +19,77 @@
 
 ### 2.1 🏠 ACCUEIL (read-only pour @everyone)
 
-| Salon | Type | Description |
-|-------|------|-------------|
-| `📜-regles` | Texte | Code de conduite, règles de sécurité (pas de credentials), licence CC-BY-SA pour les captures d'écran |
-| `📢-annonces` | Texte | Releases, sécurité (CVE), événements communautaires. Rôle @Announcements pingable. |
-| `🚀-onboarding` | Texte | Guide "Day 1" : rôles, salons utiles, comment poser une question. Pin du message de bienvenue. |
-| `🗳️-votes` | Texte | Sondages roadmap, choix de logos, noms de releases. Utilisation de reactions (👍/👎) ou bot. |
+| Salon           | Type  | Description                                                                                           |
+|-----------------|-------|-------------------------------------------------------------------------------------------------------|
+| `📜-regles`     | Texte | Code de conduite, règles de sécurité (pas de credentials), licence CC-BY-SA pour les captures d'écran |
+| `📢-annonces`   | Texte | Releases, sécurité (CVE), événements communautaires. Rôle @Announcements pingable.                    |
+| `🚀-onboarding` | Texte | Guide "Day 1" : rôles, salons utiles, comment poser une question. Pin du message de bienvenue.        |
+| `🗳️-votes`     | Texte | Sondages roadmap, choix de logos, noms de releases. Utilisation de reactions (👍/👎) ou bot.          |
 
 ### 2.2 💬 COMMUNAUTÉ (ouverts)
 
-| Salon | Type | Description |
-|-------|------|-------------|
-| `💡-general` | Texte | Discussions libres, présentations, veille techno ETL/ELT |
-| `🎓-debutants` | Texte | Espace sans jugement pour les questions "basiques" (installation, premier job, migration TOS → Talaxie) |
-| `🌍-i18n-general` | Texte | Canal anglais principal pour la communauté internationale |
-| `🎉-victoires` | Texte | Partage de succès : job en prod, contribution mergée, certification. Moral boost. |
+| Salon             | Type  | Description                                                                                             |
+|-------------------|-------|---------------------------------------------------------------------------------------------------------|
+| `💡-general`      | Texte | Discussions libres, présentations, veille techno ETL/ELT                                                |
+| `🎓-debutants`    | Texte | Espace sans jugement pour les questions "basiques" (installation, premier job, migration TOS → Talaxie) |
+| `🌍-i18n-general` | Texte | Canal anglais principal pour la communauté internationale                                               |
+| `🎉-victoires`    | Texte | Partage de succès : job en prod, contribution mergée, certification. Moral boost.                       |
 
 ### 2.3 🛠️ SUPPORT TECHNIQUE (aide entre pairs)
 
-| Salon | Type | Description |
-|-------|------|-------------|
-| `❓-aide-installation` | Texte | Problèmes de build, Java, Maven, Eclipse RCP, plugins manquants |
-| `❓-aide-jobs` | Texte | Questions sur les jobs, composants, connexions bases de données, erreurs d'exécution |
-| `❓-aide-migration` | Texte | Spécifique migration depuis Talend Open Studio (compatibilité .item, .properties) |
-| `🔒-aide-securite` | Texte | **Restreint @Contributeur+** — discussions sur les rapports d'audit, fixes, CVE. Pas de divulgation publique avant patch. |
-| `📎-partage-screenshots` | Texte | Captures d'écran de logs/configurations (anonymisées obligatoires) |
-| `🧵-threads-support` | Forum | Format forum pour les tickets d'aide longs. Un thread = un problème. Archivage auto après 30j inactivité. |
+| Salon                    | Type  | Description                                                                                                               |
+|--------------------------|-------|---------------------------------------------------------------------------------------------------------------------------|
+| `❓-aide-installation`    | Texte | Problèmes de build, Java, Maven, Eclipse RCP, plugins manquants                                                           |
+| `❓-aide-jobs`            | Texte | Questions sur les jobs, composants, connexions bases de données, erreurs d'exécution                                      |
+| `❓-aide-migration`       | Texte | Spécifique migration depuis Talend Open Studio (compatibilité .item, .properties)                                         |
+| `🔒-aide-securite`       | Texte | **Restreint @Contributeur+** — discussions sur les rapports d'audit, fixes, CVE. Pas de divulgation publique avant patch. |
+| `📎-partage-screenshots` | Texte | Captures d'écran de logs/configurations (anonymisées obligatoires)                                                        |
+| `🧵-threads-support`     | Forum | Format forum pour les tickets d'aide longs. Un thread = un problème. Archivage auto après 30j inactivité.                 |
 
 ### 2.4 🔧 CONTRIBUTION & DÉVELOPPEMENT
 
-| Salon | Type | Description |
-|-------|------|-------------|
-| `🤝-contribuer` | Texte | Guide pour faire sa première PR, signer le CLA, choisir une "good first issue" |
-| `💻-dev-core` | Texte | Discussion architecture Java, refactoring, choix technologiques (ex: Java 17 vs 21) |
-| `🔌-dev-composants` | Texte | Développement de nouveaux connecteurs/composants. Partage de templates. |
-| `🧪-ci-cd` | Texte | Pipelines GitHub Actions, tests automatisés, builds cassés |
-| `📋-code-review` | Texte | Demande de relecture informelle avant PR, discussion sur les patterns |
+| Salon                  | Type  | Description                                                                              |
+|------------------------|-------|------------------------------------------------------------------------------------------|
+| `🤝-contribuer`        | Texte | Guide pour faire sa première PR, signer le CLA, choisir une "good first issue"           |
+| `💻-dev-core`          | Texte | Discussion architecture Java, refactoring, choix technologiques (ex: Java 17 vs 21)      |
+| `🔌-dev-composants`    | Texte | Développement de nouveaux connecteurs/composants. Partage de templates.                  |
+| `🧪-ci-cd`             | Texte | Pipelines GitHub Actions, tests automatisés, builds cassés                               |
+| `📋-code-review`       | Texte | Demande de relecture informelle avant PR, discussion sur les patterns                    |
 | `🔒-security-response` | Texte | **Restreint @Security Team** — coordination des fix de sécurité, divulgation responsable |
 
 ### 2.5 📚 DOCUMENTATION & SAVOIR
 
-| Salon | Type | Description |
-|-------|------|-------------|
+| Salon              | Type  | Description                                                             |
+|--------------------|-------|-------------------------------------------------------------------------|
 | `📖-docs-feedback` | Texte | Retours sur la documentation Docusaurus, signalement de pages obsolètes |
-| `📝-tutoriels` | Texte | Partage de tutoriels communautaires (vidéos, articles, notebooks) |
-| `🔗-veille` | Texte | Veille ETL/ELT : articles, nouveaux outils, benchmarks, conférences |
+| `📝-tutoriels`     | Texte | Partage de tutoriels communautaires (vidéos, articles, notebooks)       |
+| `🔗-veille`        | Texte | Veille ETL/ELT : articles, nouveaux outils, benchmarks, conférences     |
 
 ### 2.6 🏢 GOVERNANCE & PROJET
 
-| Salon | Type | Description |
-|-------|------|-------------|
-| `📊-roadmap` | Texte | Discussion publique de la roadmap GitHub Projects. Pas de décision unilatérale. |
-| `🏛️-tsc-public` | Texte | Compte-rendus des réunions du Technical Steering Committee (transparents) |
-| `🤝-partenariats` | Texte | Discussions avec entreprises souhaitant sponsoriser ou contribuer. Modéré. |
+| Salon             | Type  | Description                                                                     |
+|-------------------|-------|---------------------------------------------------------------------------------|
+| `📊-roadmap`      | Texte | Discussion publique de la roadmap GitHub Projects. Pas de décision unilatérale. |
+| `🏛️-tsc-public`  | Texte | Compte-rendus des réunions du Technical Steering Committee (transparents)       |
+| `🤝-partenariats` | Texte | Discussions avec entreprises souhaitant sponsoriser ou contribuer. Modéré.      |
 
 ### 2.7 🎙️ VOCAL & ÉVÉNEMENTS
 
-| Salon | Type | Description |
-|-------|------|-------------|
-| `🎙️-salon-general` | Vocal | Discussions vocales informelles |
-| `🎙️-help-desk` | Vocal | Support vocal en direct (horaires définis, volontaires) |
-| `🎙️-meetup` | Vocal / Stage | Présentations communautaires mensuelles. Enregistrement possible (opt-in). |
-| `🔴-live-coding` | Vocal / Stream | Sessions de live coding sur le refactoring du projet. Planning annoncé dans #annonces. |
+| Salon               | Type           | Description                                                                            |
+|---------------------|----------------|----------------------------------------------------------------------------------------|
+| `🎙️-salon-general` | Vocal          | Discussions vocales informelles                                                        |
+| `🎙️-help-desk`     | Vocal          | Support vocal en direct (horaires définis, volontaires)                                |
+| `🎙️-meetup`        | Vocal / Stage  | Présentations communautaires mensuelles. Enregistrement possible (opt-in).             |
+| `🔴-live-coding`    | Vocal / Stream | Sessions de live coding sur le refactoring du projet. Planning annoncé dans #annonces. |
 
 ### 2.8 🤖 BOTS & LOGS (cachés / restreints)
 
-| Salon | Type | Description |
-|-------|------|-------------|
-| `🤖-bot-commands` | Texte | Commandes publiques des bots (`/help`, `/issue`, `/doc`) |
-| `🔔-github-feed` | Texte | Webhooks GitHub : nouvelles PR, issues, releases, commits sur master |
-| `🔔-ci-feed` | Texte | Webhooks CI : builds passés/échoués, résultats de tests |
-| `📋-mod-logs` | Texte | Logs des actions de modération (bot Carl-bot ou Dyno) |
+| Salon                | Type  | Description                                                                 |
+|----------------------|-------|-----------------------------------------------------------------------------|
+| `🤖-bot-commands`    | Texte | Commandes publiques des bots (`/help`, `/issue`, `/doc`)                    |
+| `🔔-github-feed`     | Texte | Webhooks GitHub : nouvelles PR, issues, releases, commits sur master        |
+| `🔔-ci-feed`         | Texte | Webhooks CI : builds passés/échoués, résultats de tests                     |
+| `📋-mod-logs`        | Texte | Logs des actions de modération (bot Carl-bot ou Dyno)                       |
 | `🚨-security-alerts` | Texte | Alertes automatiques de vulnérabilités (Dependabot, Snyk, rapports d'audit) |
 
 ---
@@ -98,35 +98,35 @@
 
 ### 3.1 Rôles hiérarchiques (permissions croissantes)
 
-| Rôle | Couleur | Permissions clés | Attribution |
-|------|---------|------------------|-------------|
-| `@everyone` | — | Lire #accueil, parler dans #general, créer des threads | Automatique |
-| `@Nouveau` | Gris | Même chose, mais salon #debutants privilégié | Auto après règlement accepté |
-| `@Utilisateur` | Bleu | Accès complet salons ouverts, réactions, fichiers | Auto après 10 min + rôle choisi |
-| `@Contributeur` | Vert | Accès salons dev, #aide-securite | Manuelle après 1ère PR mergée |
-| `@Maintainer` | Orange | Modération partielle, organisation des événements | Élection TSC |
-| `@Security Team` | Rouge | Accès #security-response, gestion des CVE | Invitation restreinte |
-| `@TSC` (Technical Steering Committee) | Violet | Gouvernance, décisions finales | Vote communautaire |
-| `@Admin` | Noir | Tout | Fondateurs + hébergeurs techniques |
+| Rôle                                  | Couleur | Permissions clés                                       | Attribution                        |
+|---------------------------------------|---------|--------------------------------------------------------|------------------------------------|
+| `@everyone`                           | —       | Lire #accueil, parler dans #general, créer des threads | Automatique                        |
+| `@Nouveau`                            | Gris    | Même chose, mais salon #debutants privilégié           | Auto après règlement accepté       |
+| `@Utilisateur`                        | Bleu    | Accès complet salons ouverts, réactions, fichiers      | Auto après 10 min + rôle choisi    |
+| `@Contributeur`                       | Vert    | Accès salons dev, #aide-securite                       | Manuelle après 1ère PR mergée      |
+| `@Maintainer`                         | Orange  | Modération partielle, organisation des événements      | Élection TSC                       |
+| `@Security Team`                      | Rouge   | Accès #security-response, gestion des CVE              | Invitation restreinte              |
+| `@TSC` (Technical Steering Committee) | Violet  | Gouvernance, décisions finales                         | Vote communautaire                 |
+| `@Admin`                              | Noir    | Tout                                                   | Fondateurs + hébergeurs techniques |
 
 ### 3.2 Rôles thématiques (non hiérarchiques, cumulables)
 
-| Rôle | Description | Auto-attribution via bot |
-|------|-------------|--------------------------|
-| `@Java Dev` | Développeur Java/Eclipse RCP | ✅ Oui (réaction rôles) |
-| `@Data Engineer` | Utilisateur ETL/ELT | ✅ Oui |
-| `@Admin Sys` | Déploiement, CI/CD, infra | ✅ Oui |
-| `@Traducteur` | Contribue aux traductions docs | ✅ Oui |
-| `@Bug Hunter` | Chercheur de vulnérabilités | ✅ Oui |
-| `@Mentor` | Bénévole pour guider les débutants | ✅ Oui (après validation modérateur) |
+| Rôle             | Description                        | Auto-attribution via bot            |
+|------------------|------------------------------------|-------------------------------------|
+| `@Java Dev`      | Développeur Java/Eclipse RCP       | ✅ Oui (réaction rôles)              |
+| `@Data Engineer` | Utilisateur ETL/ELT                | ✅ Oui                               |
+| `@Admin Sys`     | Déploiement, CI/CD, infra          | ✅ Oui                               |
+| `@Traducteur`    | Contribue aux traductions docs     | ✅ Oui                               |
+| `@Bug Hunter`    | Chercheur de vulnérabilités        | ✅ Oui                               |
+| `@Mentor`        | Bénévole pour guider les débutants | ✅ Oui (après validation modérateur) |
 
 ### 3.3 Rôles de notification (pingables)
 
-| Rôle | Usage |
-|------|-------|
-| `@Announcements` | Annonces officielles (rare, important) |
-| `@Help Needed` | Demande d'aide urgente sur un bug bloquant |
-| `@Release Ping` | Notifications de nouvelles releases |
+| Rôle             | Usage                                      |
+|------------------|--------------------------------------------|
+| `@Announcements` | Annonces officielles (rare, important)     |
+| `@Help Needed`   | Demande d'aide urgente sur un bug bloquant |
+| `@Release Ping`  | Notifications de nouvelles releases        |
 
 ---
 
@@ -208,12 +208,12 @@ Configuration des webhooks :
 
 ### 6.2 Escalade des sanctions
 
-| Infraction | 1ère fois | Répétition |
-|------------|-----------|------------|
-| Spam / off-topic | Warn + suppression | Mute 1h |
-| Credentials leakés | Suppression immédiate + MP sécurité | Ban temporaire + rotation des creds |
-| Comportement toxique | Warn | Mute 24h → Kick → Ban |
-| Troll / FUD sur le projet | Warn + clarification | Mute → Ban |
+| Infraction                | 1ère fois                           | Répétition                          |
+|---------------------------|-------------------------------------|-------------------------------------|
+| Spam / off-topic          | Warn + suppression                  | Mute 1h                             |
+| Credentials leakés        | Suppression immédiate + MP sécurité | Ban temporaire + rotation des creds |
+| Comportement toxique      | Warn                                | Mute 24h → Kick → Ban               |
+| Troll / FUD sur le projet | Warn + clarification                | Mute → Ban                          |
 
 ### 6.3 Divulgation responsable (sécurité)
 
@@ -225,26 +225,26 @@ Configuration des webhooks :
 
 ## 7. Intégration avec l'écosystème externe
 
-| Outil externe | Intégration Discord | Salon lié |
-|---------------|---------------------|-----------|
-| **GitHub** | Webhooks + bot officiel | `#github-feed` |
-| **GitHub Projects** | Aperçu roadmap dans topic du salon `#roadmap` | `#roadmap` |
-| **Discourse** | Bridge (optionnel) : les topics importants sont relayés | `#veille` |
-| **Docusaurus** | Commande `/doc` + liens dans les réponses d'aide | `#docs-feedback` |
-| **CI/CD (GitHub Actions)** | Webhooks build status | `#ci-feed` |
-| **Snyk/Dependabot** | Alertes vulnérabilités | `#security-alerts` |
+| Outil externe              | Intégration Discord                                     | Salon lié          |
+|----------------------------|---------------------------------------------------------|--------------------|
+| **GitHub**                 | Webhooks + bot officiel                                 | `#github-feed`     |
+| **GitHub Projects**        | Aperçu roadmap dans topic du salon `#roadmap`           | `#roadmap`         |
+| **Discourse**              | Bridge (optionnel) : les topics importants sont relayés | `#veille`          |
+| **Docusaurus**             | Commande `/doc` + liens dans les réponses d'aide        | `#docs-feedback`   |
+| **CI/CD (GitHub Actions)** | Webhooks build status                                   | `#ci-feed`         |
+| **Snyk/Dependabot**        | Alertes vulnérabilités                                  | `#security-alerts` |
 
 ---
 
 ## 8. Métriques de santé communautaire (à suivre)
 
-| Métrique | Objectif 6 mois | Outil |
-|----------|-----------------|-------|
-| Membres actifs (messages/semaine) | 50+ | Discord Analytics ou Statbot |
-| Temps de réponse médian aux questions | < 4h | Suivi manuel ou bot |
-| Taux de conversion Nouveau → Contributeur | 5% | Suivi GitHub + rôles |
-| Satisfaction (sondage mensuel) | > 4/5 | Bot sondage |
-| Incidents de sécurité (fuite de creds) | 0 | Logs modération |
+| Métrique                                  | Objectif 6 mois | Outil                        |
+|-------------------------------------------|-----------------|------------------------------|
+| Membres actifs (messages/semaine)         | 50+             | Discord Analytics ou Statbot |
+| Temps de réponse médian aux questions     | < 4h            | Suivi manuel ou bot          |
+| Taux de conversion Nouveau → Contributeur | 5%              | Suivi GitHub + rôles         |
+| Satisfaction (sondage mensuel)            | > 4/5           | Bot sondage                  |
+| Incidents de sécurité (fuite de creds)    | 0               | Logs modération              |
 
 ---
 
