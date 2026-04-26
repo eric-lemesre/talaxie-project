@@ -1,0 +1,28 @@
+[Unit]
+Description=Talaxie Discord Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=talaxie
+Group=talaxie
+WorkingDirectory=/opt/talaxie-bot
+ExecStart=/opt/talaxie-bot/venv/bin/python bot.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Environment
+EnvironmentFile=/opt/talaxie-bot/.env
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/talaxie-bot
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

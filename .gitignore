@@ -6,6 +6,9 @@
 # Données confidentielles
 contributors-github.md
 
+# Site WordPress (contient wp-config.php avec credentials)
+site-web/
+
 # Node
 node_modules/
 dist/
