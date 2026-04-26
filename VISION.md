@@ -38,13 +38,13 @@ La communauté Talend est immense mais éparpillée.
 
 Pour transformer les échanges en travail concret, une pile d'outils (*stack*) moderne est indispensable.
 
-| Type d'outil | Solution recommandée | Rôle spécifique pour Talaxie |
-| :--- | :--- | :--- |
-| **Code & Forge** | GitHub | Centraliser le code, gérer les versions et utiliser les *Issues* pour le tracking des bugs. |
-| **Communication synchrone** | Discord ou Slack | Idéal pour l'entraide rapide entre développeurs et les annonces "live". |
-| **Savoir pérenne** | Discourse | Forum structuré pour que les solutions aux problèmes techniques restent indexées sur Google (contrairement à Discord). |
-| **Documentation** | Docusaurus | Générer une documentation moderne, versionnée et facilement traduisible. |
-| **Gestion de projet** | GitHub Projects | Visualiser l'avancement des développements sous forme de kanban accessible à tous. |
+| Type d'outil                | Solution recommandée | Rôle spécifique pour Talaxie                                                                                           |
+|:----------------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------|
+| **Code & Forge**            | GitHub               | Centraliser le code, gérer les versions et utiliser les *Issues* pour le tracking des bugs.                            |
+| **Communication synchrone** | Discord ou Slack     | Idéal pour l'entraide rapide entre développeurs et les annonces "live".                                                |
+| **Savoir pérenne**          | Discourse            | Forum structuré pour que les solutions aux problèmes techniques restent indexées sur Google (contrairement à Discord). |
+| **Documentation**           | Docusaurus           | Générer une documentation moderne, versionnée et facilement traduisible.                                               |
+| **Gestion de projet**       | GitHub Projects      | Visualiser l'avancement des développements sous forme de kanban accessible à tous.                                     |
 
 ---
 
