@@ -1,0 +1,22 @@
+# Secrets
+.env
+.env.local
+.env.production
+
+# Données confidentielles
+contributors-github.md
+
+# Node
+node_modules/
+dist/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
