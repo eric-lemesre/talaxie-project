@@ -9,6 +9,10 @@ contributors-github.md
 # Site WordPress (contient wp-config.php avec credentials)
 site-web/
 
+# Composer
+vendor/
+composer.phar
+
 # Node
 node_modules/
 dist/

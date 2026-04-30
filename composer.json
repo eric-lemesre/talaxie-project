@@ -1,0 +1,45 @@
+{
+    "name": "eric-lemesre/talaxie-project",
+    "description": "Umbrella repo for the Talaxie community ecosystem (WordPress site, Discord bot, infrastructure).",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://talaxie.org",
+    "require": {
+        "php": ">=8.1",
+        "composer/installers": "^2.3",
+        "roots/wordpress": "^6.5"
+    },
+    "require-dev": {
+        "wp-cli/wp-cli-bundle": "^2.11"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org",
+            "only": ["wpackagist-plugin/*", "wpackagist-theme/*"]
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "roots/wordpress-core-installer": true
+        },
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "wordpress-install-dir": "site-web",
+        "installer-paths": {
+            "site-web/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
+            "site-web/wp-content/themes/{$name}/": ["type:wordpress-theme"],
+            "site-web/wp-content/mu-plugins/{$name}/": ["type:wordpress-muplugin"]
+        }
+    },
+    "scripts": {
+        "bootstrap": "bash bin/bootstrap.sh",
+        "wp": "wp --path=site-web",
+        "reset-db": "bash bin/reset-db.sh"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

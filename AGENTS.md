@@ -33,7 +33,7 @@ Talaxie-Project/
 │   └── migrate-to-vps.sh                ← (à déplacer ici)
 ├── bin/                                 ← (à créer) scripts dev local
 │   └── bootstrap.sh                     ← (à créer) init env de dev
-├── composer.json                        ← (à créer) installe WP via roots/wordpress
+├── composer.json                        ← installe WP via roots/wordpress + scripts d'orchestration
 ├── .env.example                         ← (à créer) template variables d'env
 ├── .env                                 ← gitignored — secrets locaux
 └── site-web/                            ← gitignored — généré par bootstrap.sh
