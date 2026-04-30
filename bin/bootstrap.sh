@@ -248,7 +248,68 @@ phase_wp_install() {
     log_ok "WordPress installed"
 }
 
-# ----- Phase 6 — Summary -----------------------------------------------------
+# ----- Phase 6 — Clone theme & plugin repos ----------------------------------
+
+phase_clone_components() {
+    log_phase "Phase 6 — Clone Talaxie theme & plugin"
+
+    local theme_repo="${TALAXIE_THEME_REPO:-git@github.com:eric-lemesre/talaxie-wp-theme.git}"
+    local theme_dir="${WP_DIR}/wp-content/themes/talaxie"
+    local core_repo="${TALAXIE_CORE_REPO:-git@github.com:eric-lemesre/talaxie-wp-core.git}"
+    local core_dir="${WP_DIR}/wp-content/plugins/talaxie-core"
+
+    # Theme
+    if [[ -d "$theme_dir/.git" ]]; then
+        log_info "Theme already cloned at ${theme_dir}, skipping."
+    else
+        log_info "Cloning theme from ${theme_repo}..."
+        git clone "$theme_repo" "$theme_dir"
+        log_ok "Theme cloned"
+    fi
+    if [[ -f "$theme_dir/composer.json" ]]; then
+        log_info "Installing theme dev dependencies..."
+        ( cd "$theme_dir" && composer install --no-interaction --prefer-dist --no-progress )
+        log_ok "Theme dependencies installed"
+    fi
+
+    # Plugin
+    if [[ -d "$core_dir/.git" ]]; then
+        log_info "Plugin already cloned at ${core_dir}, skipping."
+    else
+        log_info "Cloning plugin from ${core_repo}..."
+        git clone "$core_repo" "$core_dir"
+        log_ok "Plugin cloned"
+    fi
+    if [[ -f "$core_dir/composer.json" ]]; then
+        log_info "Installing plugin runtime dependencies..."
+        ( cd "$core_dir" && composer install --no-interaction --prefer-dist --no-progress )
+        log_ok "Plugin dependencies installed"
+    fi
+}
+
+# ----- Phase 7 — Activate theme & plugin -------------------------------------
+
+phase_activate_components() {
+    log_phase "Phase 7 — Activate Talaxie theme & plugin"
+
+    if [[ -d "${WP_DIR}/wp-content/themes/talaxie" ]]; then
+        if "$WP_BIN" theme activate talaxie --path="$WP_DIR" >/dev/null 2>&1; then
+            log_ok "Theme 'talaxie' activated"
+        else
+            log_warn "Could not activate theme 'talaxie' — check vendor/ and theme.json"
+        fi
+    fi
+
+    if [[ -d "${WP_DIR}/wp-content/plugins/talaxie-core" ]]; then
+        if "$WP_BIN" plugin activate talaxie-core --path="$WP_DIR" >/dev/null 2>&1; then
+            log_ok "Plugin 'talaxie-core' activated"
+        else
+            log_warn "Could not activate plugin 'talaxie-core' — check vendor/autoload.php"
+        fi
+    fi
+}
+
+# ----- Phase 8 — Summary -----------------------------------------------------
 
 phase_summary() {
     log_phase "Done"
@@ -260,10 +321,14 @@ phase_summary() {
     echo "  Admin URL:     ${WP_HOME}/wp-admin/"
     echo "  Admin user:    ${WP_ADMIN_USER}"
     echo "  WP path:       ${WP_DIR}"
+    echo "  Theme:         site-web/wp-content/themes/talaxie/    (separate Git repo)"
+    echo "  Plugin:        site-web/wp-content/plugins/talaxie-core/  (separate Git repo)"
     echo ""
     echo "  Useful commands:"
     echo "    composer wp <subcommand>     # run wp-cli scoped to this install"
-    echo "    composer reset-db            # wipe and re-import dev DB (TODO)"
+    echo "    composer reset-db            # wipe and re-import dev DB"
+    echo "    cd site-web/wp-content/themes/talaxie && git status     # work on the theme"
+    echo "    cd site-web/wp-content/plugins/talaxie-core && git status  # work on the plugin"
     echo ""
 }
 
@@ -276,6 +341,8 @@ main() {
     phase_database
     phase_wp_config
     phase_wp_install
+    phase_clone_components
+    phase_activate_components
     phase_summary
 }
 
