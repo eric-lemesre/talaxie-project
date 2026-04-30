@@ -33,7 +33,7 @@ Talaxie-Project/
 │   └── migrate-to-vps.sh                ← (à déplacer ici)
 ├── bin/                                 ← scripts dev local
 │   ├── bootstrap.sh                     ← init env de dev (orchestrateur)
-│   └── reset-db.sh                      ← (à créer) réimport DB de dev
+│   └── reset-db.sh                      ← drop tables + reinstall WP (destructif, confirmation requise)
 ├── composer.json                        ← installe WP via roots/wordpress + scripts d'orchestration
 ├── .env.example                         ← template variables d'env
 ├── .env                                 ← gitignored — secrets locaux
