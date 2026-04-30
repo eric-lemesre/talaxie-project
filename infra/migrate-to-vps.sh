@@ -182,7 +182,7 @@ phase0_preflight() {
         "discord/bot/config.py"
         "discord/bot/requirements.txt"
         "discord/bot/.env"
-        ".env"
+        "infra/.env"
     )
     for f in "${required_files[@]}"; do
         if [ ! -f "${STAGING_DIR}/${f}" ]; then
@@ -201,13 +201,13 @@ phase0_preflight() {
     fi
     log_ok "Espace disque : $(( avail_kb / 1024 )) Mo disponibles"
 
-    # Chargement du mot de passe DB depuis .env
-    DB_PASSWORD=$(grep '^TALAXIE_ORG_DB_PSWD=' "${STAGING_DIR}/.env" | cut -d'=' -f2- | tr -d '"' | tr -d "'")
+    # Chargement du mot de passe DB depuis infra/.env
+    DB_PASSWORD=$(grep '^TALAXIE_ORG_DB_PSWD=' "${STAGING_DIR}/infra/.env" | cut -d'=' -f2- | tr -d '"' | tr -d "'")
     if [ -z "$DB_PASSWORD" ]; then
-        log_error "TALAXIE_ORG_DB_PSWD introuvable dans ${STAGING_DIR}/.env"
+        log_error "TALAXIE_ORG_DB_PSWD introuvable dans ${STAGING_DIR}/infra/.env"
         exit 1
     fi
-    log_ok "Mot de passe DB chargé depuis .env"
+    log_ok "Mot de passe DB chargé depuis infra/.env"
 
     # Auto-détection de l'IP du VPS
     VPS_IP=$(ip -4 route get 1.1.1.1 2>/dev/null | awk '{print $7; exit}' || hostname -I | awk '{print $1}')

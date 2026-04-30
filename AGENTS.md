@@ -29,8 +29,10 @@ Talaxie-Project/
 ├── discord/                             ← outils Discord (futur repo dédié)
 │   ├── bot/                             ← bot Python
 │   └── setup/                           ← guides serveur Discord
-├── infra/                               ← (à créer) scripts VPS, Ansible, etc.
-│   └── migrate-to-vps.sh                ← (à déplacer ici)
+├── infra/                               ← scripts de déploiement et secrets prod
+│   ├── migrate-to-vps.sh                ← migration OVH mutualisé → VPS (production-ready)
+│   ├── .env                             ← gitignored — credentials OVH/FTP/SSH/DB prod
+│   └── .env.example                     ← template des variables de déploiement
 ├── bin/                                 ← scripts dev local
 │   ├── bootstrap.sh                     ← init env de dev (orchestrateur)
 │   └── reset-db.sh                      ← drop tables + reinstall WP (destructif, confirmation requise)
@@ -84,7 +86,7 @@ git log --oneline -20
 cd discord/bot && pip install -r requirements.txt && python bot.py
 
 # Migration vers VPS (à exécuter sur le VPS cible, pas en local)
-sudo bash migrate-to-vps.sh --help
+sudo bash infra/migrate-to-vps.sh --help
 ```
 
 ## Skills Claude Code recommandés
@@ -105,7 +107,7 @@ Pour les sous-dossiers, voir leurs `AGENTS.md` respectifs (`discord/AGENTS.md`, 
 
 - **Ne jamais committer `site-web/`** même si ça semble pratique pour partager une config de test.
 - **Ne jamais désactiver les hooks git** (`--no-verify`) — investigate plutôt l'erreur.
-- **Ne pas re-indenter `migrate-to-vps.sh`** : c'est un script bash production-ready avec idempotence soigneuse.
+- **Ne pas re-indenter `infra/migrate-to-vps.sh`** : c'est un script bash production-ready avec idempotence soigneuse.
 - **Ne pas remplacer le `set -euo pipefail`** dans les scripts bash — c'est intentionnel.
 - **Avant d'ajouter une dépendance**, vérifier compatibilité GPLv2+ (cohérent avec l'esprit fork libre).
 
