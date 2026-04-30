@@ -31,10 +31,11 @@ Talaxie-Project/
 │   └── setup/                           ← guides serveur Discord
 ├── infra/                               ← (à créer) scripts VPS, Ansible, etc.
 │   └── migrate-to-vps.sh                ← (à déplacer ici)
-├── bin/                                 ← (à créer) scripts dev local
-│   └── bootstrap.sh                     ← (à créer) init env de dev
+├── bin/                                 ← scripts dev local
+│   ├── bootstrap.sh                     ← init env de dev (orchestrateur)
+│   └── reset-db.sh                      ← (à créer) réimport DB de dev
 ├── composer.json                        ← installe WP via roots/wordpress + scripts d'orchestration
-├── .env.example                         ← (à créer) template variables d'env
+├── .env.example                         ← template variables d'env
 ├── .env                                 ← gitignored — secrets locaux
 └── site-web/                            ← gitignored — généré par bootstrap.sh
 ```
