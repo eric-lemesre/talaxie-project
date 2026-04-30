@@ -25,7 +25,8 @@ Aucun submodule. Les repos sont reliés au niveau applicatif uniquement (script 
 Talaxie-Project/
 ├── README.md, VISION.md, LICENSE       ← documentation projet
 ├── AGENTS.md                            ← ce fichier
-├── docs/                                ← (à créer) docs techniques
+├── docs/                                ← documentation projet
+│   └── roadmap.md                       ← cadrage infra (fait) vs produit (à faire)
 ├── discord/                             ← outils Discord (futur repo dédié)
 │   ├── bot/                             ← bot Python
 │   └── setup/                           ← guides serveur Discord
