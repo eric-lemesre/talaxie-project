@@ -30,19 +30,20 @@ Talaxie-Project/
 ├── VISION.md                  # Document fondateur : vision, gouvernance, stratégie communautaire
 ├── Discord-Architecture.md    # Architecture complète du serveur Discord
 │
-├── discord-bot/               # Bot Discord Python (en développement)
-│   ├── bot.py                 # Code principal (5 modules : onboarding, sécurité,
-│   │                          #   modération, utilitaires, webhooks)
-│   ├── config.py              # Configuration et patterns de détection
-│   ├── requirements.txt       # Dépendances Python
-│   └── .env.example           # Template de variables d'environnement
-│
-└── discord-setup/             # Guides de configuration du serveur
-    ├── mcp-prompts.md         # Automatisation MCP en 14 phases
-    ├── descriptions-salons.md # Descriptions de tous les salons
-    ├── onboarding.md          # Message d'accueil épinglé
-    ├── reglement.md           # Code de conduite communautaire
-    └── sondage-satisfaction.md# Sondage mensuel de satisfaction
+└── discord/                       # Outils communautaires Discord (futur repo dédié)
+    ├── bot/                       # Bot Discord Python (en développement)
+    │   ├── bot.py                 # Code principal (5 modules : onboarding, sécurité,
+    │   │                          #   modération, utilitaires, webhooks)
+    │   ├── config.py              # Configuration et patterns de détection
+    │   ├── requirements.txt       # Dépendances Python
+    │   └── .env.example           # Template de variables d'environnement
+    │
+    └── setup/                     # Guides de configuration du serveur
+        ├── mcp-prompts.md         # Automatisation MCP en 14 phases
+        ├── descriptions-salons.md # Descriptions de tous les salons
+        ├── onboarding.md          # Message d'accueil épinglé
+        ├── reglement.md           # Code de conduite communautaire
+        └── sondage-satisfaction.md # Sondage mensuel de satisfaction
 ```
 
 ## Vision communautaire
@@ -92,7 +93,7 @@ Le bot Python est en cours de développement. Il intègre :
 ### Lancer le bot (développement)
 
 ```bash
-cd discord-bot
+cd discord/bot
 cp .env.example .env
 # Remplir .env avec les valeurs réelles
 pip install -r requirements.txt
@@ -182,7 +183,7 @@ The Python bot (under development) features:
 ### Run the bot (development)
 
 ```bash
-cd discord-bot
+cd discord/bot
 cp .env.example .env
 # Fill .env with actual values
 pip install -r requirements.txt

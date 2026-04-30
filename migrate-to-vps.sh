@@ -178,10 +178,10 @@ phase0_preflight() {
     local required_files=(
         "site-web/wp-config.php"
         "site-web/talaxiu48_mysql_db.sql"
-        "discord-bot/bot.py"
-        "discord-bot/config.py"
-        "discord-bot/requirements.txt"
-        "discord-bot/.env"
+        "discord/bot/bot.py"
+        "discord/bot/config.py"
+        "discord/bot/requirements.txt"
+        "discord/bot/.env"
         ".env"
     )
     for f in "${required_files[@]}"; do
@@ -560,10 +560,10 @@ phase4_bot() {
     log_info "Copie des fichiers du bot vers ${BOT_DIR}..."
     run mkdir -p "$BOT_DIR"
     if [ "$DRY_RUN" = false ]; then
-        cp "${STAGING_DIR}/discord-bot/bot.py" "$BOT_DIR/"
-        cp "${STAGING_DIR}/discord-bot/config.py" "$BOT_DIR/"
-        cp "${STAGING_DIR}/discord-bot/requirements.txt" "$BOT_DIR/"
-        cp "${STAGING_DIR}/discord-bot/.env" "$BOT_DIR/"
+        cp "${STAGING_DIR}/discord/bot/bot.py" "$BOT_DIR/"
+        cp "${STAGING_DIR}/discord/bot/config.py" "$BOT_DIR/"
+        cp "${STAGING_DIR}/discord/bot/requirements.txt" "$BOT_DIR/"
+        cp "${STAGING_DIR}/discord/bot/.env" "$BOT_DIR/"
         log_ok "Fichiers du bot copiés"
     else
         log_info "[DRY-RUN] Copie bot.py, config.py, requirements.txt, .env vers ${BOT_DIR}/"
