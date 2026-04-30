@@ -12,8 +12,8 @@ Ce repo (`Talaxie-Project`) est le **repo umbrella** : il orchestre l'écosystè
 
 ```
 github.com/eric-lemesre/Talaxie-Project   ← ce repo (umbrella)
-github.com/eric-lemesre/talaxie-theme     ← Block Theme WordPress (publié WP.org)
-github.com/eric-lemesre/talaxie-core      ← Plugin compagnon (publié WP.org)
+github.com/eric-lemesre/talaxie-wp-theme  ← Block Theme WordPress (publié WP.org)
+github.com/eric-lemesre/talaxie-wp-core   ← Plugin compagnon (publié WP.org)
 github.com/eric-lemesre/talaxie-discord   ← (futur) outils Discord
 ```
 
@@ -47,7 +47,7 @@ Talaxie-Project/
 - **`site-web/` n'est jamais committé.** C'est un environnement de travail local généré par `bin/bootstrap.sh`. Aucun code livrable n'y vit.
 - **`.env`** contient des secrets (DB, Discord token, GitHub PAT). **Jamais** le committer ni l'afficher dans des logs. Toujours utiliser `.env.example` comme référence.
 - **Tous les outils Discord** vont dans `discord/` (bot + setup + futurs scripts). Préparation à un repo `talaxie-discord` indépendant.
-- **Pas de code de production WordPress** dans ce repo : il va dans `talaxie-theme` ou `talaxie-core`.
+- **Pas de code de production WordPress** dans ce repo : il va dans `talaxie-wp-theme` ou `talaxie-wp-core`.
 - **Préserver l'historique git** lors des renommages : toujours `git mv`, jamais `mv` + `git add -A` sauf cas particulier.
 
 ## Aucune référence à l'agent IA dans les artefacts du projet
