@@ -10,7 +10,8 @@
         "roots/wordpress": "^6.5"
     },
     "require-dev": {
-        "wp-cli/wp-cli-bundle": "^2.11"
+        "wp-cli/wp-cli-bundle": "^2.11",
+        "wpackagist-theme/twentytwentyfive": "*"
     },
     "repositories": [
         {
