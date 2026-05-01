@@ -26,7 +26,8 @@ Talaxie-Project/
 ├── README.md, VISION.md, LICENSE       ← documentation projet
 ├── AGENTS.md                            ← ce fichier
 ├── docs/                                ← documentation projet
-│   └── roadmap.md                       ← cadrage infra (fait) vs produit (à faire)
+│   ├── roadmap.md                       ← cadrage infra (fait) vs produit (à faire)
+│   └── mcp-setup.md                     ← brancher Claude Code via mcp-adapter + abilities-api
 ├── discord/                             ← outils Discord (futur repo dédié)
 │   ├── bot/                             ← bot Python
 │   └── setup/                           ← guides serveur Discord

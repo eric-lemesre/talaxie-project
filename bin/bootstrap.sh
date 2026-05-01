@@ -309,7 +309,100 @@ phase_activate_components() {
     fi
 }
 
-# ----- Phase 8 — Summary -----------------------------------------------------
+# ----- Phase 8 — MCP setup (optional) ----------------------------------------
+
+phase_mcp_setup() {
+    if [[ "${TALAXIE_INSTALL_MCP:-false}" != "true" ]]; then
+        return 0
+    fi
+
+    log_phase "Phase 8 — MCP setup (mcp-adapter + abilities-api)"
+
+    local plugins_dir="${WP_DIR}/wp-content/plugins"
+    local mu_dir="${WP_DIR}/wp-content/mu-plugins"
+
+    # Clone mcp-adapter
+    if [[ -d "${plugins_dir}/mcp-adapter/.git" ]]; then
+        log_info "mcp-adapter already cloned, skipping."
+    else
+        log_info "Cloning WordPress/mcp-adapter..."
+        git clone --depth=1 https://github.com/WordPress/mcp-adapter.git "${plugins_dir}/mcp-adapter"
+        log_ok "mcp-adapter cloned"
+    fi
+    if [[ -f "${plugins_dir}/mcp-adapter/composer.json" ]]; then
+        ( cd "${plugins_dir}/mcp-adapter" && composer install --no-dev --no-interaction --prefer-dist --no-progress )
+        log_ok "mcp-adapter dependencies installed"
+    fi
+
+    # Clone abilities-api
+    if [[ -d "${plugins_dir}/abilities-api/.git" ]]; then
+        log_info "abilities-api already cloned, skipping."
+    else
+        log_info "Cloning WordPress/abilities-api..."
+        git clone --depth=1 https://github.com/WordPress/abilities-api.git "${plugins_dir}/abilities-api"
+        log_ok "abilities-api cloned"
+    fi
+    if [[ -f "${plugins_dir}/abilities-api/composer.json" ]]; then
+        ( cd "${plugins_dir}/abilities-api" && composer install --no-dev --no-interaction --prefer-dist --no-progress )
+        log_ok "abilities-api dependencies installed"
+    fi
+
+    # Activate both plugins
+    if "$WP_BIN" plugin activate abilities-api --path="$WP_DIR" >/dev/null 2>&1; then
+        log_ok "abilities-api activated"
+    else
+        log_warn "abilities-api activation issue"
+    fi
+    if "$WP_BIN" plugin activate mcp-adapter --path="$WP_DIR" >/dev/null 2>&1; then
+        log_ok "mcp-adapter activated"
+    else
+        log_warn "mcp-adapter activation issue"
+    fi
+
+    # Local-dev mu-plugin: force application passwords ON for talaxie.test (HTTP).
+    mkdir -p "$mu_dir"
+    local mu_file="${mu_dir}/talaxie-dev-app-passwords.php"
+    if [[ ! -f "$mu_file" ]]; then
+        cat > "$mu_file" <<'MUEOF'
+<?php
+/**
+ * Plugin Name: Talaxie Dev — Force Application Passwords
+ * Description: Forces application passwords ON for the local HTTP dev site (talaxie.test). DO NOT USE IN PRODUCTION.
+ * Version: 0.1.0
+ *
+ * @package Talaxie\Dev
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+if ( isset( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] === 'talaxie.test' ) {
+    add_filter( 'wp_is_application_passwords_available', '__return_true' );
+    add_filter( 'wp_is_application_passwords_available_for_user', '__return_true' );
+}
+MUEOF
+        log_ok "mu-plugin talaxie-dev-app-passwords created"
+    fi
+
+    # Ensure WP_APPLICATION_PASSWORDS_AVAILABLE is defined in wp-config.php.
+    if ! "$WP_BIN" config has WP_APPLICATION_PASSWORDS_AVAILABLE --type=constant --path="$WP_DIR" >/dev/null 2>&1; then
+        "$WP_BIN" config set WP_APPLICATION_PASSWORDS_AVAILABLE true --type=constant --raw --path="$WP_DIR" >/dev/null
+        log_ok "WP_APPLICATION_PASSWORDS_AVAILABLE constant added to wp-config.php"
+    fi
+
+    echo ""
+    log_info "Next manual step: create an Application Password for the admin and connect Claude Code."
+    log_info "  vendor/bin/wp user application-password create admin 'Claude Code MCP' --porcelain --path=site-web"
+    log_info "  Then add it to .env as WP_ADMIN_APP_PASSWORD=..."
+    log_info "  Compute Basic auth: echo -n 'admin:<password>' | base64 -w0"
+    log_info "  Register in Claude Code:"
+    log_info "    claude mcp add talaxie-wp --transport http \\"
+    log_info "        --url http://talaxie.test/wp-json/mcp/mcp-adapter-default-server \\"
+    log_info "        --header 'Authorization: Basic <base64>'"
+    log_info ""
+    log_info "Note: Nginx vhost must forward HTTP_AUTHORIZATION to PHP-FPM. See docs/mcp-setup.md."
+}
+
+# ----- Phase 9 — Summary -----------------------------------------------------
 
 phase_summary() {
     log_phase "Done"
@@ -343,6 +436,7 @@ main() {
     phase_wp_install
     phase_clone_components
     phase_activate_components
+    phase_mcp_setup
     phase_summary
 }
 
