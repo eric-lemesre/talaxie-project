@@ -27,7 +27,10 @@ Talaxie-Project/
 ├── AGENTS.md                            ← ce fichier
 ├── docs/                                ← documentation projet
 │   ├── roadmap.md                       ← cadrage infra (fait) vs produit (à faire)
-│   └── mcp-setup.md                     ← brancher Claude Code via mcp-adapter + abilities-api
+│   ├── mcp-setup.md                     ← brancher Claude Code via mcp-adapter + abilities-api
+│   ├── wp-mcp-abilities.md              ← architecture sudo-style pour les abilities WP exposées en MCP
+│   └── prompts/
+│       └── mcp-sudo-architecture.md     ← prompt autonome pour relancer la réflexion archi MCP
 ├── discord/                             ← outils Discord (futur repo dédié)
 │   ├── bot/                             ← bot Python
 │   └── setup/                           ← guides serveur Discord
