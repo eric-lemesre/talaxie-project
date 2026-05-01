@@ -105,6 +105,18 @@ phase_preflight() {
     log_ok ".env found"
 }
 
+# ----- Phase 0.5 — Git hooks -------------------------------------------------
+
+phase_git_hooks() {
+    log_phase "Phase 0.5 — Git hooks"
+
+    if [[ -x "${REPO_ROOT}/bin/install-hooks.sh" ]]; then
+        bash "${REPO_ROOT}/bin/install-hooks.sh"
+    else
+        log_warn "bin/install-hooks.sh not found, skipping hook activation."
+    fi
+}
+
 # ----- Phase 1 — Load .env ---------------------------------------------------
 
 phase_load_env() {
@@ -416,6 +428,7 @@ phase_summary() {
 
 main() {
     phase_preflight
+    phase_git_hooks
     phase_load_env
     phase_composer_install
     phase_database

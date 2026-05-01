@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+# =============================================================================
+# pre-push hook: refuse to push if a likely secret appears in the new commits
+# =============================================================================
+#
+# Activated by setting:
+#     git config core.hooksPath .githooks
+# (bin/bootstrap.sh and bin/install-hooks.sh do this for you.)
+#
+# Override (false positive):
+#     git push --no-verify
+#
+# Patterns covered:
+#   - OpenAI / Anthropic / DeepSeek / Moonshot / OpenRouter / generic "sk-"
+#   - Google Cloud / AI Studio  AIza...
+#   - GitHub PAT / OAuth / install / user / refresh tokens (ghp_, gho_, ghs_, ghu_, ghr_)
+#   - AWS access key id (AKIA...)
+#   - Slack tokens (xoxb/xoxp/xoxa/xoxs-)
+#   - Private keys (RSA, OPENSSH, EC, DSA, ENCRYPTED)
+#   - WordPress application passwords inlined ("password" = 24-char alphanumeric)
+# =============================================================================
+
+set -u
+
+ZERO_SHA=0000000000000000000000000000000000000000
+ANY_FAIL=0
+
+# Patterns to flag, in extended-regex form.
+SECRET_RE='sk-[A-Za-z0-9_-]{20,}|AIza[A-Za-z0-9_-]{30,}|gh[pousr]_[A-Za-z0-9]{30,}|AKIA[A-Z0-9]{16}|xox[bpsa]-[A-Za-z0-9-]{20,}|BEGIN (RSA |OPENSSH |EC |DSA |ENCRYPTED )?PRIVATE KEY'
+
+# Read refs being pushed from stdin (one per line).
+# shellcheck disable=SC2034
+while read -r local_ref local_sha remote_ref remote_sha; do
+    # Branch deletion: nothing to scan.
+    if [ "$local_sha" = "$ZERO_SHA" ]; then
+        continue
+    fi
+
+    # Determine the commit range to scan.
+    if [ "$remote_sha" = "$ZERO_SHA" ]; then
+        # New branch: compare against any reachable remote ref.
+        base=$(git for-each-ref --format='%(objectname)' refs/remotes/ 2>/dev/null \
+               | xargs -I{} git merge-base "$local_sha" {} 2>/dev/null \
+               | sort -u | head -1 || true)
+        if [ -n "${base:-}" ]; then
+            range="${base}..${local_sha}"
+        else
+            # Truly orphan: scan the whole branch.
+            range="$local_sha"
+        fi
+    else
+        range="${remote_sha}..${local_sha}"
+    fi
+
+    # Inspect only the lines added in those commits.
+    # Use awk (portable across grep / ugrep / busybox) to keep + lines that
+    # are NOT the diff '+++' file headers.
+    diff_added=$(git diff --no-color "$range" -- 2>/dev/null \
+                 | awk '/^[+]/ && !/^[+][+][+]/')
+
+    if [ -z "$diff_added" ]; then
+        continue
+    fi
+
+    matches=$(printf '%s\n' "$diff_added" | grep -nE "$SECRET_RE" || true)
+
+    if [ -n "$matches" ]; then
+        echo ""
+        echo "  ✗ pre-push aborted — potential secret(s) detected on $local_ref"
+        echo "    range: $range"
+        echo ""
+        echo "  Matching lines (added in these commits):"
+        echo ""
+        printf '%s\n' "$matches" | sed 's/^/      /'
+        echo ""
+        echo "  → If this is a true secret: rotate it, rewrite history, then push."
+        echo "  → If this is a false positive: bypass once with: git push --no-verify"
+        echo ""
+        ANY_FAIL=1
+    fi
+done
+
+if [ "$ANY_FAIL" -ne 0 ]; then
+    exit 1
+fi
+
+echo "  ✓ pre-push: no obvious secret in new commits."
+exit 0

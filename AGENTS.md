@@ -41,7 +41,10 @@ Talaxie-Project/
 │   └── .env.example                     ← template des variables de déploiement
 ├── bin/                                 ← scripts dev local
 │   ├── bootstrap.sh                     ← init env de dev (orchestrateur)
-│   └── reset-db.sh                      ← drop tables + reinstall WP (destructif, confirmation requise)
+│   ├── reset-db.sh                      ← drop tables + reinstall WP (destructif, confirmation requise)
+│   └── install-hooks.sh                 ← active core.hooksPath = .githooks (idempotent)
+├── .githooks/                           ← hooks Git versionnés (activés via bin/install-hooks.sh)
+│   └── pre-push                         ← refuse de pousser si une clé/token apparaît dans les commits
 ├── composer.json                        ← installe WP via roots/wordpress + scripts d'orchestration
 ├── .env.example                         ← template variables d'env
 ├── .env                                 ← gitignored — secrets locaux
