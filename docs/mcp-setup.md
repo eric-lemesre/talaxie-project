@@ -9,12 +9,17 @@ manage content and abilities from your AI tooling.
 | Component | Role |
 |---|---|
 | [`WordPress/mcp-adapter`](https://github.com/WordPress/mcp-adapter) | Bridges WordPress Abilities API → MCP. Exposes the `/mcp/*` REST endpoints. |
-| [`WordPress/abilities-api`](https://github.com/WordPress/abilities-api) | Defines the Abilities API and a few core abilities (`core/get-site-info`, etc.). |
+| WordPress core 6.9 Abilities API | Provides `wp_register_ability()`, `WP_Ability`, `WP_Abilities_Registry`, REST routes `/wp-abilities/v1/*` and a few core abilities (`core/get-site-info`, `core/get-user-info`, `core/get-environment-info`). **No plugin to install** — it ships with WordPress 6.9. |
 | `talaxie-dev-app-passwords` mu-plugin | Forces application passwords ON for `http://talaxie.test` (WordPress refuses them on plain HTTP by default). |
 | `WP_APPLICATION_PASSWORDS_AVAILABLE = true` constant | Same goal, set in `wp-config.php`. |
 
-All three are managed by `bin/bootstrap.sh` when `TALAXIE_INSTALL_MCP=true`
-in `.env`.
+The plugin is managed by `bin/bootstrap.sh` when `TALAXIE_INSTALL_MCP=true`
+in `.env`. The mu-plugin and the constant are also handled there.
+
+> **Historical note** — The standalone `WordPress/abilities-api` repo
+> was a feature plugin while the API was incubated. It was **archived on
+> 2026-02-05** when the API landed in WordPress 6.9 core. **Do not
+> install it** alongside WP 6.9+: it would duplicate the registry.
 
 ## One-time host setup (Nginx must forward `Authorization`)
 
@@ -49,8 +54,10 @@ Then re-run the bootstrap (idempotent — clones are skipped if already present)
 ./bin/bootstrap.sh
 ```
 
-The script clones both repos, installs Composer deps, activates the
-plugins, drops the dev-only mu-plugin and adds the WordPress constant.
+The script clones `mcp-adapter`, installs its Composer deps, activates
+it, drops the dev-only mu-plugin and adds the WordPress constant. The
+Abilities API itself is provided by WordPress 6.9 core — no extra
+install needed.
 
 ## Create an Application Password for Claude Code
 
@@ -131,7 +138,7 @@ immediately available without re-registering anything in Claude Code.
 | `401 rest_forbidden` | Nginx strips `Authorization` | Add `fastcgi_param HTTP_AUTHORIZATION $http_authorization;` to vhost |
 | `401 rest_forbidden` even with the fix above | Application passwords disabled (HTTP) | Make sure the `talaxie-dev-app-passwords` mu-plugin is in `wp-content/mu-plugins/` |
 | `400 Missing Mcp-Session-Id header` | Calling a method before `initialize` | Always call `initialize` first, capture `Mcp-Session-Id` from the response headers |
-| Empty `tools/list` | No ability registered | Make sure `abilities-api` is **active** (it ships a few core abilities) |
+| Empty `tools/list` | No ability registered (rare on WP 6.9 — core ships three) | Verify with `wp eval 'print_r(wp_get_abilities());'` — the registry must contain at least `core/get-site-info`, `core/get-user-info`, `core/get-environment-info` |
 
 ## Production note
 

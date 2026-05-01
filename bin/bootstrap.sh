@@ -316,10 +316,15 @@ phase_mcp_setup() {
         return 0
     fi
 
-    log_phase "Phase 8 — MCP setup (mcp-adapter + abilities-api)"
+    log_phase "Phase 8 — MCP setup (mcp-adapter on top of WP 6.9 core Abilities API)"
 
     local plugins_dir="${WP_DIR}/wp-content/plugins"
     local mu_dir="${WP_DIR}/wp-content/mu-plugins"
+
+    # Note: the WordPress Abilities API is part of WordPress 6.9 core
+    # (wp-includes/abilities-api.php and friends). The standalone
+    # WordPress/abilities-api plugin was a feature plugin and was archived
+    # on 2026-02-05. We rely on core only.
 
     # Clone mcp-adapter
     if [[ -d "${plugins_dir}/mcp-adapter/.git" ]]; then
@@ -334,25 +339,7 @@ phase_mcp_setup() {
         log_ok "mcp-adapter dependencies installed"
     fi
 
-    # Clone abilities-api
-    if [[ -d "${plugins_dir}/abilities-api/.git" ]]; then
-        log_info "abilities-api already cloned, skipping."
-    else
-        log_info "Cloning WordPress/abilities-api..."
-        git clone --depth=1 https://github.com/WordPress/abilities-api.git "${plugins_dir}/abilities-api"
-        log_ok "abilities-api cloned"
-    fi
-    if [[ -f "${plugins_dir}/abilities-api/composer.json" ]]; then
-        ( cd "${plugins_dir}/abilities-api" && composer install --no-dev --no-interaction --prefer-dist --no-progress )
-        log_ok "abilities-api dependencies installed"
-    fi
-
-    # Activate both plugins
-    if "$WP_BIN" plugin activate abilities-api --path="$WP_DIR" >/dev/null 2>&1; then
-        log_ok "abilities-api activated"
-    else
-        log_warn "abilities-api activation issue"
-    fi
+    # Activate
     if "$WP_BIN" plugin activate mcp-adapter --path="$WP_DIR" >/dev/null 2>&1; then
         log_ok "mcp-adapter activated"
     else

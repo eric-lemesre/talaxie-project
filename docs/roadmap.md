@@ -6,17 +6,17 @@
 
 ## Infrastructure (déjà en place)
 
-| Domaine | Livré |
-|---|---|
-| Repos GitHub | `Talaxie-Project` (umbrella) + `talaxie-wp-theme` + `talaxie-wp-core` |
-| Conventions | Layout multi-repos, AGENTS.md à chaque niveau, GPL-2.0-or-later, no AI attribution |
-| Outillage dev | Composer + roots/wordpress, wp-cli pinné, WPCS 3.x, PHPCompatibility-WP |
-| Bootstrap local | `bin/bootstrap.sh` reproductible (PHP / DB / WP / theme / plugin / activation) |
-| Reset DB local | `bin/reset-db.sh` |
-| Déploiement prod | `infra/migrate-to-vps.sh` |
-| Block Theme | `theme.json`, 6 templates, 2 parts, 4 patterns, polices self-hosted |
-| Plugin compagnon | 2 CPT, 1 taxonomy, REST endpoints, scaffolding pour intégrations |
-| CI | Lint + smoke test verts sur les 2 repos publiables |
+| Domaine          | Livré                                                                              |
+|------------------|------------------------------------------------------------------------------------|
+| Repos GitHub     | `Talaxie-Project` (umbrella) + `talaxie-wp-theme` + `talaxie-wp-core`              |
+| Conventions      | Layout multi-repos, AGENTS.md à chaque niveau, GPL-2.0-or-later, no AI attribution |
+| Outillage dev    | Composer + roots/wordpress, wp-cli pinné, WPCS 3.x, PHPCompatibility-WP            |
+| Bootstrap local  | `bin/bootstrap.sh` reproductible (PHP / DB / WP / theme / plugin / activation)     |
+| Reset DB local   | `bin/reset-db.sh`                                                                  |
+| Déploiement prod | `infra/migrate-to-vps.sh`                                                          |
+| Block Theme      | `theme.json`, 6 templates, 2 parts, 4 patterns, polices self-hosted                |
+| Plugin compagnon | 2 CPT, 1 taxonomy, REST endpoints, scaffolding pour intégrations                   |
+| CI               | Lint + smoke test verts sur les 2 repos publiables                                 |
 
 Tout cela **prépare** le travail. Mais à ce stade, le site n'a encore aucune
 fonctionnalité visible pour un visiteur extérieur.
