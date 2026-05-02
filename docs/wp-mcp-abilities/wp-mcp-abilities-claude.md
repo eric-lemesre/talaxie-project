@@ -435,32 +435,44 @@ Constante `TALAXIE_MCP_DEV_MODE` à mettre dans `wp-config.php`.
 |-------|---------------------------------------------------------------------------------------------------------------------|-----------------|------------|
 | 1     | Rôle `ai_bot` + `TokenManager` + `AbstractAbility` + 5 abilities (`Site/GetInfo`, `Posts/{List,Get,Create,Update}`) | ~350            | 100 %      |
 | 2     | `Pages/CRUD`, `Media/{List,Upload}`, `Releases/CRUD`, `Audit/{List,PostType,Logger}`                                | ~400            | 100 %      |
-| 3     | Sudo : `AdminPage` + `CliCommand` + `RestController` + asymétrie test/prod                                          | ~300            | 33 %       |
-| 4     | `Users/CRUD`, `Plugins/CRUD`, `Generic/RestCall`, `Network/*` (multisite)                                           | ~500            | 0 %        |
-| 5     | Audit retention cron, dev-mode banner, drift detection endpoint                                                     | ~200            | 33 %       |
+| 3     | Sudo : `AdminPage` + `CliCommand` + `RestController` + asymétrie test/prod                                          | ~300            | 100 %      |
+| 4     | `Users/CRUD`, `Plugins/CRUD`, `Generic/RestCall`, `Network/*` (multisite)                                           | ~500            | 100 %      |
+| 5     | Audit retention cron, dev-mode banner, drift detection endpoint                                                     | ~200            | 100 %      |
 
-Total ~1750 lignes de PHP applicatif (hors tests). Réaliste sur 4-5
-sessions de développement focalisées.
+Total ~1750 lignes de PHP applicatif (hors tests). Réalisé.
 
-> **Notes de completion** (mise à jour pendant l'implémentation)
+> **Notes de completion** (implémentation terminée)
 >
-> - **Phase 1 — 100 %** : implémentation + 26 tests PHPUnit
->   d'intégration (TokenManager, CapabilityGate, AiBotRole, GetInfo).
->   L'`AbstractAbility` du doc d'origine a été remplacée par l'API
->   native `wp_register_ability()` de WordPress 6.9 + une classe
->   `CapabilityGate` qui factorise le `permission_callback`.
+> - **Phase 1 — 100 %** : rôle `ai_bot`, `TokenManager` (bcrypt + scope JSON),
+>   `CapabilityGate` (qui remplace `AbstractAbility` en s'appuyant sur
+>   l'API native `wp_register_ability()` de WordPress 6.9), et 5
+>   abilities `Site/GetInfo` + `Posts/{List,Get,Create,Update}`.
 > - **Phase 2 — 100 %** : Pages CRUD, Media (list/upload/delete),
->   Releases CRUD (CPT spécialisé en `capability_type` `talaxie_release`
->   pour permettre la suppression sans sudo, conformément au doc),
->   audit complet (CPT non-public + Logger hook + ability
->   `audit-list`). 16 tests ajoutés. Total : 46 tests verts.
-> - **Phase 3 — 33 %** : l'asymétrie test/prod est déjà câblée
->   (`talaxie-mcp-test-server` vs `talaxie-mcp-prod-server` selon
->   `wp_get_environment_type()`). Reste à livrer l'`AdminPage` sudo, la
->   `CliCommand` `wp talaxie mcp sudo-token` et le `RestController`.
-> - **Phase 5 — 33 %** : `AuditRetention` (cron daily + filtre de durée
->   de rétention) livré en avance avec la phase 2 audit. Reste la
->   bannière dev-mode et l'endpoint de drift detection.
+>   Releases CRUD (CPT spécialisé en `capability_type`
+>   `talaxie_release` pour permettre la suppression sans sudo), audit
+>   complet (CPT non-public + Logger hook + ability `audit-list`).
+> - **Phase 3 — 100 %** : `Sudo/AdminPage` (Tools > MCP Sudo, form +
+>   liste des tokens vivants + revoke), `Sudo/CliCommand`
+>   (`wp talaxie mcp sudo-token|sudo-list|sudo-revoke`),
+>   `Sudo/RestController` (`POST/GET/DELETE
+>   /wp-json/talaxie-core/v1/mcp/sudo-token`). Asymétrie test/prod
+>   gérée par `wp_get_environment_type()`.
+> - **Phase 4 — 100 %** : Users CRUD, Plugins/{List,Activate},
+>   Site/{Get,Update}Option (avec allowlist filterable),
+>   Generic/RestCall (proxy `wp/v2/*` test-server-only),
+>   Network/{Create,Delete}Site pour multisite. `CapabilityGate`
+>   reconnaît la « capability virtuelle » `super_admin`.
+> - **Phase 5 — 100 %** : `DevMode` (bannière rouge + refus sur
+>   environnements non-locaux), endpoint drift detection
+>   (`GET /wp-json/talaxie-core/v1/mcp/abilities-on-server`),
+>   `AuditRetention` (cron daily, livré en avance dès la phase 2).
+>
+> **Couverture tests** : 70 tests d'intégration PHPUnit, suite verte.
+> CI GitHub Actions sur matrix PHP 8.1/8.2/8.3 × WP 6.5/latest.
+>
+> **Surface MCP exposée** : 30 abilities au total ; 21 sur le serveur
+> production (lecture + CRUD safe), 30 sur le serveur test (incluant
+> les destructives gardées par `is_allowed_on_production() = false`).
 
 ## 14. Décisions ouvertes
 

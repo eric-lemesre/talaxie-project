@@ -219,6 +219,7 @@ define( 'WP_SITEURL', '${WP_SITEURL}' );
 define( 'WP_DEBUG', ${WP_DEBUG:-false} );
 define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false );
+define( 'WP_ENVIRONMENT_TYPE', 'local' );
 define( 'DISALLOW_FILE_EDIT', true );
 EOF
 )
@@ -386,6 +387,13 @@ MUEOF
     if ! "$WP_BIN" config has WP_APPLICATION_PASSWORDS_AVAILABLE --type=constant --path="$WP_DIR" >/dev/null 2>&1; then
         "$WP_BIN" config set WP_APPLICATION_PASSWORDS_AVAILABLE true --type=constant --raw --path="$WP_DIR" >/dev/null
         log_ok "WP_APPLICATION_PASSWORDS_AVAILABLE constant added to wp-config.php"
+    fi
+
+    # Ensure WP_ENVIRONMENT_TYPE is set so the talaxie-mcp-test-server is exposed
+    # in addition to the prod-only one (talaxie-core gates it on environment_type).
+    if ! "$WP_BIN" config has WP_ENVIRONMENT_TYPE --type=constant --path="$WP_DIR" >/dev/null 2>&1; then
+        "$WP_BIN" config set WP_ENVIRONMENT_TYPE local --type=constant --path="$WP_DIR" >/dev/null
+        log_ok "WP_ENVIRONMENT_TYPE constant added to wp-config.php (value: local)"
     fi
 
     echo ""
