@@ -1,7 +1,7 @@
 # Architecture MCP « sudo-style » pour Talaxie WordPress
 
 > Réponse de cadrage à la mission décrite dans
-> [`prompts/mcp-sudo-architecture.md`](prompts/mcp-sudo-architecture.md).
+> [`prompts/mcp-sudo-architecture.md`](../prompts/mcp-sudo-architecture.md).
 > Ce document détaille la proposition d'architecture pour exposer le
 > site WordPress aux agents IA avec un mécanisme d'élévation
 > de privilèges inspiré d'Unix `sudo`.
@@ -86,24 +86,24 @@ supplémentairement gardées par une whitelist.
 Créé à l'activation du plugin (`register_activation_hook`), supprimé à
 la désinstallation (`uninstall.php`).
 
-| Capabilities accordées | Justification |
-|---|---|
-| `read` | Frontend public + dashboard de base |
-| `edit_posts`, `edit_published_posts` | Le bot peut écrire/modifier des articles |
-| `edit_pages`, `edit_published_pages` | Idem pages |
-| `upload_files` | Joindre des médias |
-| `read_private_posts` | Voir les drafts pour pouvoir les compléter |
-| `edit_talaxie_release`, `edit_talaxie_contributor`, `edit_talaxie_component` | CPT métier — c'est *le job* du bot |
-| `read_private_talaxie_*` | Idem mais pour les drafts métier |
+| Capabilities accordées                                                       | Justification                              |
+|------------------------------------------------------------------------------|--------------------------------------------|
+| `read`                                                                       | Frontend public + dashboard de base        |
+| `edit_posts`, `edit_published_posts`                                         | Le bot peut écrire/modifier des articles   |
+| `edit_pages`, `edit_published_pages`                                         | Idem pages                                 |
+| `upload_files`                                                               | Joindre des médias                         |
+| `read_private_posts`                                                         | Voir les drafts pour pouvoir les compléter |
+| `edit_talaxie_release`, `edit_talaxie_contributor`, `edit_talaxie_component` | CPT métier — c'est *le job* du bot         |
+| `read_private_talaxie_*`                                                     | Idem mais pour les drafts métier           |
 
-| Capabilities refusées explicitement | Conséquence |
-|---|---|
-| `manage_options` | Pas de modification des réglages |
-| `delete_posts`, `delete_pages` | Pas de suppression sans sudo |
-| `manage_users`, `create_users`, `edit_users`, `delete_users` | Pas de manipulation de comptes |
+| Capabilities refusées explicitement                                  | Conséquence                          |
+|----------------------------------------------------------------------|--------------------------------------|
+| `manage_options`                                                     | Pas de modification des réglages     |
+| `delete_posts`, `delete_pages`                                       | Pas de suppression sans sudo         |
+| `manage_users`, `create_users`, `edit_users`, `delete_users`         | Pas de manipulation de comptes       |
 | `activate_plugins`, `update_plugins`, `update_core`, `update_themes` | Pas d'altération de l'infrastructure |
-| `unfiltered_html`, `unfiltered_upload` | Pas de scripts injectables |
-| `manage_categories` | Pas de réorganisation taxonomique |
+| `unfiltered_html`, `unfiltered_upload`                               | Pas de scripts injectables           |
+| `manage_categories`                                                  | Pas de réorganisation taxonomique    |
 
 Toutes ces capabilities refusées au quotidien restent atteignables via
 le mécanisme sudo.
@@ -121,15 +121,15 @@ Trois canaux équivalents, qui invoquent tous le même `TokenManager` :
 
 ### Spec d'un token
 
-| Champ | Valeur |
-|---|---|
-| Format | `tlx_sudo_` + 32 caractères base62 |
-| Stockage en DB | `password_hash($token, PASSWORD_BCRYPT)` — jamais le token brut |
+| Champ               | Valeur                                                                                                                                         |
+|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| Format              | `tlx_sudo_` + 32 caractères base62                                                                                                             |
+| Stockage en DB      | `password_hash($token, PASSWORD_BCRYPT)` — jamais le token brut                                                                                |
 | Stockage paramètres | Table custom `wp_talaxie_sudo_tokens` (id, token_hash, scope, created_at, expires_at, revoked_at, single_use, usage_count, created_by_user_id) |
-| TTL | Configurable, défaut 15 min, max 60 min (constante `TALAXIE_MCP_SUDO_MAX_TTL`) |
-| Scope | Liste de capabilities (ex: `["manage_options"]` ou `["edit_users", "delete_users"]`) |
-| Single-use | Optionnel, default false |
-| Affichage | Une seule fois à la création (comme un app password WP) |
+| TTL                 | Configurable, défaut 15 min, max 60 min (constante `TALAXIE_MCP_SUDO_MAX_TTL`)                                                                 |
+| Scope               | Liste de capabilities (ex: `["manage_options"]` ou `["edit_users", "delete_users"]`)                                                           |
+| Single-use          | Optionnel, default false                                                                                                                       |
+| Affichage           | Une seule fois à la création (comme un app password WP)                                                                                        |
 
 ### Validation
 
@@ -333,10 +333,10 @@ src/Mcp/
 
 Le plugin enregistre **deux serveurs MCP** distincts :
 
-| Serveur | Slug MCP | Set d'abilities | Sécurité |
-|---|---|---|---|
-| Test | `talaxie-mcp-test-server` | Toutes (CRUD complet, options, plugins, users, generic rest-call) | Permissif |
-| Prod | `talaxie-mcp-prod-server` | Filtrées par `is_allowed_on_production() === true` | Restrictif |
+| Serveur | Slug MCP                  | Set d'abilities                                                   | Sécurité   |
+|---------|---------------------------|-------------------------------------------------------------------|------------|
+| Test    | `talaxie-mcp-test-server` | Toutes (CRUD complet, options, plugins, users, generic rest-call) | Permissif  |
+| Prod    | `talaxie-mcp-prod-server` | Filtrées par `is_allowed_on_production() === true`                | Restrictif |
 
 L'enregistrement filtre **automatiquement** : à l'init, on parcourt
 toutes les abilities et on ne pousse sur le serveur prod que celles
@@ -370,13 +370,13 @@ Lecture exposée via une ability `talaxie/audit/list` (cap : `manage_options`).
 
 ## 9. Compromis et alternatives écartées
 
-| Alternative | Raison du rejet |
-|---|---|
-| **OAuth2 / JWT** au lieu de sudo tokens | Overkill pour le cas d'usage. WordPress n'a pas de support OAuth2 natif, ajouter un OAuth provider triple le scope. JWT serait stateless (pas révocable côté serveur) et ferait perdre l'audit fin. Les sudo tokens stateful en DB sont plus simples et plus sûrs. |
-| **Un user MCP par capability** (un user par rôle) | Multiplier les comptes complique l'audit. Avec un seul user `ai_bot` + élévation explicite, on a une trace unifiée. |
-| **Bypass via constante `WP_DEBUG`** | `WP_DEBUG` est souvent à `true` en staging accessible publiquement. Dangereux. À la place, constante dédiée `TALAXIE_MCP_DEV_MODE` à activer explicitement. |
-| **Tokens en transient WP** | Lecture en clair dans `wp_options` si dump DB. Préférer une table dédiée avec hash. |
-| **1 seule ability générique `wp/rest-call`** | Le LLM doit deviner les bons endpoints REST. Beaucoup d'erreurs en pratique. On garde `RestCall` comme **fallback** seulement, pas comme cas nominal. |
+| Alternative                                       | Raison du rejet                                                                                                                                                                                                                                                    |
+|---------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **OAuth2 / JWT** au lieu de sudo tokens           | Overkill pour le cas d'usage. WordPress n'a pas de support OAuth2 natif, ajouter un OAuth provider triple le scope. JWT serait stateless (pas révocable côté serveur) et ferait perdre l'audit fin. Les sudo tokens stateful en DB sont plus simples et plus sûrs. |
+| **Un user MCP par capability** (un user par rôle) | Multiplier les comptes complique l'audit. Avec un seul user `ai_bot` + élévation explicite, on a une trace unifiée.                                                                                                                                                |
+| **Bypass via constante `WP_DEBUG`**               | `WP_DEBUG` est souvent à `true` en staging accessible publiquement. Dangereux. À la place, constante dédiée `TALAXIE_MCP_DEV_MODE` à activer explicitement.                                                                                                        |
+| **Tokens en transient WP**                        | Lecture en clair dans `wp_options` si dump DB. Préférer une table dédiée avec hash.                                                                                                                                                                                |
+| **1 seule ability générique `wp/rest-call`**      | Le LLM doit deviner les bons endpoints REST. Beaucoup d'erreurs en pratique. On garde `RestCall` comme **fallback** seulement, pas comme cas nominal.                                                                                                              |
 
 ## 10. Risques résiduels (non éliminés par cette architecture)
 
@@ -431,24 +431,44 @@ Constante `TALAXIE_MCP_DEV_MODE` à mettre dans `wp-config.php`.
 
 ## 13. Phasage d'implémentation
 
-| Phase | Livrable | Lignes estimées |
-|---|---|---|
-| 1 | Rôle `ai_bot` + `TokenManager` + `AbstractAbility` + 5 abilities (`Site/GetInfo`, `Posts/{List,Get,Create,Update}`) | ~350 |
-| 2 | `Pages/CRUD`, `Media/{List,Upload}`, `Releases/CRUD`, `Audit/{List,PostType,Logger}` | ~400 |
-| 3 | Sudo : `AdminPage` + `CliCommand` + `RestController` + asymétrie test/prod | ~300 |
-| 4 | `Users/CRUD`, `Plugins/CRUD`, `Generic/RestCall`, `Network/*` (multisite) | ~500 |
-| 5 | Audit retention cron, dev-mode banner, drift detection endpoint | ~200 |
+| Phase | Livrable                                                                                                            | Lignes estimées | Completion |
+|-------|---------------------------------------------------------------------------------------------------------------------|-----------------|------------|
+| 1     | Rôle `ai_bot` + `TokenManager` + `AbstractAbility` + 5 abilities (`Site/GetInfo`, `Posts/{List,Get,Create,Update}`) | ~350            | 100 %      |
+| 2     | `Pages/CRUD`, `Media/{List,Upload}`, `Releases/CRUD`, `Audit/{List,PostType,Logger}`                                | ~400            | 100 %      |
+| 3     | Sudo : `AdminPage` + `CliCommand` + `RestController` + asymétrie test/prod                                          | ~300            | 33 %       |
+| 4     | `Users/CRUD`, `Plugins/CRUD`, `Generic/RestCall`, `Network/*` (multisite)                                           | ~500            | 0 %        |
+| 5     | Audit retention cron, dev-mode banner, drift detection endpoint                                                     | ~200            | 33 %       |
 
 Total ~1750 lignes de PHP applicatif (hors tests). Réaliste sur 4-5
 sessions de développement focalisées.
+
+> **Notes de completion** (mise à jour pendant l'implémentation)
+>
+> - **Phase 1 — 100 %** : implémentation + 26 tests PHPUnit
+>   d'intégration (TokenManager, CapabilityGate, AiBotRole, GetInfo).
+>   L'`AbstractAbility` du doc d'origine a été remplacée par l'API
+>   native `wp_register_ability()` de WordPress 6.9 + une classe
+>   `CapabilityGate` qui factorise le `permission_callback`.
+> - **Phase 2 — 100 %** : Pages CRUD, Media (list/upload/delete),
+>   Releases CRUD (CPT spécialisé en `capability_type` `talaxie_release`
+>   pour permettre la suppression sans sudo, conformément au doc),
+>   audit complet (CPT non-public + Logger hook + ability
+>   `audit-list`). 16 tests ajoutés. Total : 46 tests verts.
+> - **Phase 3 — 33 %** : l'asymétrie test/prod est déjà câblée
+>   (`talaxie-mcp-test-server` vs `talaxie-mcp-prod-server` selon
+>   `wp_get_environment_type()`). Reste à livrer l'`AdminPage` sudo, la
+>   `CliCommand` `wp talaxie mcp sudo-token` et le `RestController`.
+> - **Phase 5 — 33 %** : `AuditRetention` (cron daily + filtre de durée
+>   de rétention) livré en avance avec la phase 2 audit. Reste la
+>   bannière dev-mode et l'endpoint de drift detection.
 
 ## 14. Décisions ouvertes
 
 - **Couverture WP-CLI** des abilities : la CLI peut-elle invoquer
   directement les abilities sans passer par MCP ? (Utile pour scripts
   d'admin.) Non bloquant pour la phase 1.
-- **Politique de cache** sur les abilities en lecture (ex:
-  `Site/GetInfo`) : object cache 5 min ? Non bloquant.
+  - Réponse Oui
+- **Politique de cache** sur les abilities en lecture (ex: `Site/GetInfo`) : object cache 5 min ? Non bloquant.
 - **Internationalisation des messages d'erreur** : actuellement en
   anglais (text-domain `talaxie-core`). À discuter avec la communauté
   Talaxie une fois la traduction française prête.
